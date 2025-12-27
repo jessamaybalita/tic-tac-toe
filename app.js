@@ -1,42 +1,42 @@
 
-const Gameboard = () => {
-    let board = [
-        [],
-        [],
-        []
-    ];
-    
-}
+import {Gameboard} from './gamelogic.js';
 
-const Player = (name, symbol, x, y) => {
-    return {
-        name,
-        symbol,
-        x,
-        y,
-        markPosition(x, y){
-            Gameboard.board[x][y] = symbol;
-            console.log(`${name} marked ${symbol} at position (${x}, ${y})`);
-        }
+
+
+// markBoard();
+const Player = (name, symbol) => ({
+    name, 
+    symbol,
+    createPlayer(name, symbol) {
+        console.log(`Player ${name} as the symbol ${symbol}`);
     }
+});
 
 
-}
 
-function playGame() {
-    // get board positions
-    document.querySelectorAll('#boardCell').forEach(
-    cell => {
-        cell.addEventListener('click', () =>{
-    // e.preventDefault();
-    const x = cell.dataset.x;
-    const y = cell.dataset.y;
+(function gameLoop() {
+
+    const playerX = Player("Player X", "X");
+    const playerO = Player("Player O", "O");
+
+    let currentPlayer = playerO;
+    Gameboard.checkWinner(currentPlayer);
     
-    const player1 = Player("Player 1", "X", x, y);
-    console.log(player1);
-})})
+    currentPlayer = currentPlayer === playerX ? playerO : playerX;
 
+    // for (let combo of winCombos) {
+    //     console.log(combo);
+    //     if (gameboard[combo[0]] === currentPlayer &&
+    //         gameboard[combo[1]] === currentPlayer &&
+    //         gameboard[combo[2]] === currentPlayer &&
+    //         gameboard[combo[3]] === currentPlayer &&
+    //         gameboard[combo[4]] === currentPlayer &&
+    //         gameboard[combo[5]] === currentPlayer &&
+    //         gameboard[combo[6]] === currentPlayer &&
+    //         gameboard[combo[7]] === currentPlayer) {
+    //             console.log(`Player ${currentPlayer.name} wins!`);
+    //             return;
+    //         }
+    // }
+})();
 
-}
-
-playGame();

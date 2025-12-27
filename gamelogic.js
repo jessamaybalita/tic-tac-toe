@@ -1,17 +1,7 @@
 
 
-const Player = (name, symbol, x, y) => {
-    return {
-        name, 
-        symbol, 
-        x: Number(x), 
-        y: Number(y)
-    }
-
-
-}
-
 export const Gameboard = {
+    gameOver: false,
     gameboard: ["", "", "", "", "", "", "", "", ""],
     winCombos: [
         [0,1,2], [3,4,5], [6,7,8],
@@ -19,31 +9,34 @@ export const Gameboard = {
         [0,4,8], [2,4,6]
     ],
     checkWinner(player) {
+        // intersetion of what is on the board and 
+        // which winning combos have the current players' symbol
         for (let combo of this.winCombos) {
         if (this.gameboard[combo[0]] === player.symbol &&
             this.gameboard[combo[1]] === player.symbol &&
             this.gameboard[combo[2]] === player.symbol) {
                 console.log(`Player ${player.name} wins!`);
-                return;
+                return this.gameOver = true;
             }
-        
-    }
+        }
     }
 };
 
 
 
-export function markBoard() {
+export function markBoard(player) {
     // get board positions
     document.querySelectorAll('#boardCell').forEach(
     cell => {
         cell.addEventListener('click', () =>{
-    // e.preventDefault();
     const position = cell.dataset.position;
+    cell.textContent = player.symbol;
+    Gameboard.gameboard[position] = player.symbol;
     
-    const player1 = Player("Player 1", "X", position);
-    cell.textContent = player1.symbol;
-    console.log(Gameboard(position, player1.symbol));
+    Gameboard.checkWinner(player);   
+    player.name = player.symbol =  player.symbol === "X" ? "O" : "X";
+    
     }
       )})
 };
+

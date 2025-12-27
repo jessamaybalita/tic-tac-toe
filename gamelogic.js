@@ -1,4 +1,19 @@
 
+// The Players
+
+export const Player = (name, symbol) => {
+    return {
+        name,
+        symbol,
+        getCurrentPlayer(){
+            return this.symbol === "X" ? playerX : playerO;
+        }
+    }
+}
+
+
+
+// The Game 
 
 export const Gameboard = {
     gameOver: false,
@@ -24,7 +39,7 @@ export const Gameboard = {
 
 
 
-export function markBoard(player) {
+export const markBoard = (player) => {
     // get board positions
     document.querySelectorAll('#boardCell').forEach(
     cell => {
